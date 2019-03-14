@@ -1,0 +1,27 @@
+{
+  "name": "api-iss-aplication",
+  "version": "1.0.0",
+  "description": "Aplication with API use to show ISS paremeters",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/0na/API-ISS-Aplication.git"
+  },
+  "author": "Aleksandra Garlikowska",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/0na/API-ISS-Aplication/issues"
+  },
+  "homepage": "https://github.com/0na/API-ISS-Aplication#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "http-server": "^0.11.1"
+  }
+}
