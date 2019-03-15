@@ -41,6 +41,23 @@ class App extends React.Component { //jest chyba ok
     if (!isLoaded) {
       return <div> Wait a second, data is loading ..</div>
     }
+
+
+    else {
+      return (
+        <div className="Container">
+          <ul>
+            { data.map(data => (
+              <li key={ data.iss_position }>
+                Longitude : { data.iss_position.longitude }
+                Latitude : { data.iss_position.latitude }
+              </li>
+            )) }
+          </ul>
+        </div>
+      );
+
+    }
     // const data = this.state.data
     // const longitude = data.iss_position.longitude;
     // const latitude = data.iss_position.latitude;
@@ -48,34 +65,34 @@ class App extends React.Component { //jest chyba ok
     // const timestamp = data.timestamp;
     // const timestamp = 'Ptaki latają kluczem';
 
-    return (
-      <div className='container'>
-        <ul>{ this.state.isLoaded ? timestamp : "Wait a second, data is uploading" }</ul>
-        <ul>{ this.state.data }</ul>
-        <div data={ this.data } />
-      </div>
-    );
-  }
+    //     return (
+    //       <div className='container'>
+    //         <ul>{ this.state.isLoaded ? timestamp : "Wait a second, data is uploading" }</ul>
+    //         <ul>{ this.state.data }</ul>
+    //         <div data={ this.data } />
+    //       </div>
+    //     );
+    //   }
 
-}
+    // }
 
-ReactDOM.render(<App />, document.getElementById("application"));
+    ReactDOM.render(<App />, document.getElementById("application"));
 
 
 
-function timeConverter(timestamp) {  //formula dziala !!!
-  var a = new Date(timestamp * 1000);
-  var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  var year = a.getFullYear();
-  var month = months[a.getMonth()];
-  var date = a.getDate();
-  var hour = a.getHours();
-  var min = a.getMinutes();
-  var sec = a.getSeconds();
-  var time =
-    date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
-  return time;
-}
+    function timeConverter(timestamp) {  //formula dziala !!!
+      var a = new Date(timestamp * 1000);
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var year = a.getFullYear();
+      var month = months[a.getMonth()];
+      var date = a.getDate();
+      var hour = a.getHours();
+      var min = a.getMinutes();
+      var sec = a.getSeconds();
+      var time =
+        date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
+      return time;
+    }
 
-console.log(timeConverter(3244234));
-console.log(data.iss_position)
+    console.log(timeConverter(3244234));
+    console.log(data.iss_position)
