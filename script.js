@@ -7,7 +7,7 @@ class App extends React.Component {
     this.state = {
       data: [],
     };
-    isLoaded = false;
+    this.isLoaded = false;
   }
 
   componentDidMount() {
@@ -38,7 +38,7 @@ class App extends React.Component {
 
 
   render() {
-    const { timestamp, longitude, latitude } = this.state;
+
     return (
       <div className='container'>
         <ul>{ this.state.isLoaded ? timestamp : "Wait a second, data is uploading" }</ul>
@@ -55,7 +55,7 @@ ReactDOM.render(<App />, document.getElementById("application"));
 
 
 
-function timeConverter(timestamp) {
+function timeConverter(timestamp) {  //formula dziala !!!
   var a = new Date(timestamp * 1000);
   var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var year = a.getFullYear();
@@ -69,4 +69,4 @@ function timeConverter(timestamp) {
   return time;
 }
 
-console.log(timeConverter(3244234));
+console.log(timeConverter(3244234)); 
