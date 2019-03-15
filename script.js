@@ -5,7 +5,7 @@ class App extends React.Component { //jest chyba ok
   constructor(props) {
     super(props);
     this.state = {
-      isLoaded = false,
+      isLoaded: false,
       data: [],
     };
   }
@@ -41,8 +41,6 @@ class App extends React.Component { //jest chyba ok
     if (!isLoaded) {
       return <div> Wait a second, data is loading ..</div>
     }
-
-
     else {
       return (
         <div className="Container">
