@@ -11,7 +11,7 @@ class App extends React.Component { //jest chyba ok
   }
 
   format({ timestamp }) {
-    return timeConverter(timestamp);
+    return timeConverter(this.data.timestamp);
   }
 
   // loadData() {
@@ -31,6 +31,7 @@ class App extends React.Component { //jest chyba ok
     fetch("http://api.open-notify.org/iss-now.json")
       .then(response => {
         const preparedResponse = JSON.parse(response);
+        console.log("response:" + response)
         this.setState({
           data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
           isLoaded: true //powinno sie ladowac

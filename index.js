@@ -15,10 +15,10 @@ class App extends React.Component {
         };
     }
     componentDidMount() {
-
+        //const preparedResponse = JSON.parse(response);
         fetch('http://api.open-notify.org/iss-now.json')
             .then(results => {
-                const preparedResponse = JSON.parse(response);
+                return results.json();
             }).then(data => {
                 let preparedResponse = data.results.map((item) => {
                     return (
