@@ -15,26 +15,26 @@ class App extends React.Component { //jest chyba ok
   }
 
   loadData() { //ok
-    fetch("http://api.open-notify.org/iss-now.json")
+    const url = "http://api.open-notify.org/iss-now.json";
+    const API = JSON.parse(url);
+    fetch(API)
       .then(response => response.json())
       .then(json => {
         this.setState({
-          data: json.result,
-          isLoaded: true
+          data: json.result,  //tu powinny wchodzic zmienne dane z api
+          isLoaded: true //powinno sie ladowac
         })
       }
       );
   }
+
   componentDidMount() { //chyba ok
     setInterval(this.loadData.bind(this), 1000);
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  componentWillUnmount() { //chyba ok
+    clearInterval(this.loadData);
   }
-
-
-
 
   render() {
     var { isLoaded, data } = this.state
@@ -51,6 +51,11 @@ class App extends React.Component { //jest chyba ok
                 Latitude : { data.iss_position.latitude }
               </li>
             )) }
+            <li>
+              Timestamp : { this.loadData }
+              <h2>It is { this.state.data.timestamp }.</h2>
+            </li>
+
           </ul>
         </div>
       );
@@ -59,18 +64,12 @@ class App extends React.Component { //jest chyba ok
 }
 ReactDOM.render(<App />, document.getElementById("application"));
 
-// const data = this.state.data
-// const longitude = data.iss_position.longitude;
-// const latitude = data.iss_position.latitude;
-// const { latitude, longitude } = data.iss_position;
-// const timestamp = data.timestamp;
+
 // const timestamp = 'Ptaki latają kluczem';
 
 //     return (
 //       <div className='container'>
 //         <ul>{ this.state.isLoaded ? timestamp : "Wait a second, data is uploading" }</ul>
-//         <ul>{ this.state.data }</ul>
-//         <div data={ this.data } />
 //       </div>
 //     );
 
@@ -90,5 +89,4 @@ function timeConverter(timestamp) {  //formula dziala !!!
   return time;
 }
 
-console.log(timeConverter(3244234));
-console.log(data.iss_position)
+console.log(timeConverter(3244234))
