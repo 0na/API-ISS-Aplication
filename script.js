@@ -45,6 +45,8 @@ class App extends React.Component { //jest chyba ok
 
   render() {
     var { isLoaded, data } = this.state
+    console.log(this.state.data)
+
     if (!isLoaded) {
       return <div> Wait a second, data is loading ..</div>
     }
