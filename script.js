@@ -19,24 +19,12 @@ class App extends React.Component { //jest chyba ok
       .then(response => {
         const preparedResponse = JSON.parse(response);
         this.setState({
-          preparedResponse,  //tu powinny wchodzic zmienne dane z api
+          data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
           isLoaded: true //powinno sie ladowac
         })
       }
       );
   }
-
-  // loadData() {
-  //   fetch("http://api.open-notify.org/iss-now.json")
-  //     .then(response => {
-  //       const preparedResponse = JSON.parse(response);
-  //       this.setState({
-  //         data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
-  //         isLoaded: true //powinno sie ladowac
-  //       })
-  //     }
-  //     );
-  // }
 
   componentDidMount() { //chyba ok
     setInterval(this.loadData.bind(this), 1000);
@@ -52,7 +40,7 @@ class App extends React.Component { //jest chyba ok
     if (!isLoaded) {
       return <div> Wait a second, data is loading ..
         <div>
-          Timestamp : data.preparedResponse.timestamp;
+          Timestamp : { data.timestamp };
       </div>
       </div>
     }

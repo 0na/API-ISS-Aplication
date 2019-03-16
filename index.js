@@ -1,39 +1,46 @@
-import React, { Component } from 'react';
-import './App.css';
 
-class App extends Component {
+class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            term: '',
-            img: ''
+            isLoading: true,
+            items: [],
+            // data: [
+            //     timestamp = [],
+            //     iss_position = {
+            //         latitude=[],
+            //         longitude=[],
+            //     }
+            // ],
         };
     }
+    componentDidMount() {
 
-    onChange = (event) => {
-        this.setState({ term: event.target.value });
-    }
-    handleSubmit = (event) => {
-        event.preventDefault();
-        const api_key = 'dc6zaTOxFJmzC';
-        const url = `http://api.giphy.com/v1/gifs/search?q=${this.state.term}&api_key=${api_key}`;
-        fetch(url)
-            .then(response => response.json())
-            .then(data => this.setState({ term: '', img: data.data[0].images.fixed_height.url }))
-            .catch(e => console.log('error', e));
+        fetch('http://api.open-notify.org/iss-now.json')
+            .then(results => {
+                const preparedResponse = JSON.parse(response);
+            }).then(data => {
+                let preparedResponse = data.results.map((item) => {
+                    return (
+                        <div timestamp={ item.results }>
+                            <div longitude={ item.iss_position.longitude }></div>
+                            <div latitude={ item.iss_position.latitude }></div>
+                        </div>
+                    )
+                })
+                    .this.setState({ items: preparedResponse });
+                console.log("The time is: ", this.state.items);
+            })
     }
 
     render() {
         return (
-            <div className="App">
-                <form onSubmit={ this.handleSubmit }>
-                    <input value={ this.state.term } onChange={ this.onChange } />
-                    <button>Search!</button>
-                </form>
-                <img src={ this.state.img } height="200" alt={ this.state.term } />
+            <div className="container">
+                <div>
+                    { this.state.preparedResponse }
+                </div>
             </div>
-        );
-    }
+        )
+    };
 }
-
 ReactDOM.render(<App />, document.getElementById("application"));
