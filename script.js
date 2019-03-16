@@ -14,11 +14,11 @@ class App extends React.Component { //jest chyba ok
     return timeConverter(timestamp);
   }
 
-  loadData() { //ok
+  loadData() {
     const url = "http://api.open-notify.org/iss-now.json";
     const API = JSON.parse(url);
-    fetch(API)
-      .then(response => response.json())
+    fetch("http://api.open-notify.org/iss-now.json")
+      .then(response => response.json())  // <= parse the JSON
       .then(json => {
         this.setState({
           data: json.result,  //tu powinny wchodzic zmienne dane z api
@@ -27,6 +27,13 @@ class App extends React.Component { //jest chyba ok
       }
       );
   }
+
+
+  // loadData() {
+  //   fetch("http://api.open-notify.org/iss-now.json")
+  //     .then(results => results.json())
+  //     .then(result => this.setState({ data: results, isLoaded: true }))
+  // }
 
   componentDidMount() { //chyba ok
     setInterval(this.loadData.bind(this), 1000);
