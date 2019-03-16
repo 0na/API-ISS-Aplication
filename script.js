@@ -15,8 +15,8 @@ class App extends React.Component { //jest chyba ok
   }
 
   loadData() {
-    const url = "http://api.open-notify.org/iss-now.json";
-    const API = JSON.parse(url);
+    // const url = "http://api.open-notify.org/iss-now.json";
+    // const API = JSON.parse(url);
     fetch("http://api.open-notify.org/iss-now.json")
       .then(response => response.json())  // <= parse the JSON
       .then(json => {
