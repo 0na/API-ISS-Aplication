@@ -19,7 +19,7 @@ class App extends React.Component { //jest chyba ok
       .then(response => {
         const preparedResponse = JSON.parse(response);
         this.setState({
-          data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
+          preparedResponse,  //tu powinny wchodzic zmienne dane z api
           isLoaded: true //powinno sie ladowac
         })
       }
@@ -28,8 +28,14 @@ class App extends React.Component { //jest chyba ok
 
   // loadData() {
   //   fetch("http://api.open-notify.org/iss-now.json")
-  //     .then(results => results.json())
-  //     .then(result => this.setState({ data: results, isLoaded: true }))
+  //     .then(response => {
+  //       const preparedResponse = JSON.parse(response);
+  //       this.setState({
+  //         data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
+  //         isLoaded: true //powinno sie ladowac
+  //       })
+  //     }
+  //     );
   // }
 
   componentDidMount() { //chyba ok
@@ -42,10 +48,13 @@ class App extends React.Component { //jest chyba ok
 
   render() {
     var { isLoaded, data } = this.state
-    console.log(this.state.data)
 
     if (!isLoaded) {
-      return <div> Wait a second, data is loading ..</div>
+      return <div> Wait a second, data is loading ..
+        <div>
+          Timestamp : data.preparedResponse.timestamp;
+      </div>
+      </div>
     }
     else {
       return (
@@ -69,17 +78,6 @@ class App extends React.Component { //jest chyba ok
   }
 }
 ReactDOM.render(<App />, document.getElementById("application"));
-
-
-// const timestamp = 'Ptaki latają kluczem';
-
-//     return (
-//       <div className='container'>
-//         <ul>{ this.state.isLoaded ? timestamp : "Wait a second, data is uploading" }</ul>
-//       </div>
-//     );
-
-
 
 function timeConverter(timestamp) {  //formula dziala !!!
   var a = new Date(timestamp * 1000);
