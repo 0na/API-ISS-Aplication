@@ -54,15 +54,15 @@ class App extends React.Component { //jest chyba ok
       return (
         <div className="Container">
           <ul>
-            { data.map(data => (
-              <li key={ data.iss_position }>
-                Longitude : { data.iss_position.longitude }
-                Latitude : { data.iss_position.latitude }
-              </li>
-            )) }
+            { this.state.datas.map(data => {
+              return (<li key={ data.iss_position }>
+                Longitude: { data.iss_position.longitude }
+                Latitude: { data.iss_position.latitude }
+              </li>);
+            }) }
             <li>
               Timestamp : { this.loadData }
-              <h2>It is { this.state.data.timestamp }.</h2>
+              <h2>It is { this.data.timestamp }.</h2>
             </li>
 
           </ul>
