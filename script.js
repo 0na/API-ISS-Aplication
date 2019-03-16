@@ -14,7 +14,20 @@ class App extends React.Component { //jest chyba ok
     return timeConverter(timestamp);
   }
 
-  loadData() {
+  // loadData() {
+  //   fetch("http://api.open-notify.org/iss-now.json")
+  //     .then(response => {
+  //       const preparedResponse = JSON.parse(response);
+  //       this.setState({
+  //         data: preparedResponse,  //tu powinny wchodzic zmienne dane z api
+  //         isLoaded: true //powinno sie ladowac
+  //       })
+  //     }
+  //     );
+  //}
+
+  componentDidMount() { //chyba ok
+    //  setInterval(this.loadData.bind(this), 1000);
     fetch("http://api.open-notify.org/iss-now.json")
       .then(response => {
         const preparedResponse = JSON.parse(response);
@@ -26,13 +39,9 @@ class App extends React.Component { //jest chyba ok
       );
   }
 
-  componentDidMount() { //chyba ok
-    setInterval(this.loadData.bind(this), 1000);
-  }
-
-  componentWillUnmount() { //chyba ok
-    clearInterval(this.loadData);
-  }
+  // componentWillUnmount() { //chyba ok
+  //   clearInterval(this.loadData);
+  // }
 
   render() {
     var { isLoaded, data } = this.state
