@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css?family=Space+Mono');
+
+* {
+  font-family: 'Space Mono', monospace;
+  line-height: 28px;
+  text-shadow: 2px 6px 9px rgba(216, 228, 82, 0.99);
+  margin: 0px;
+  padding: 0px;
+}
+
+.app {
+  background-image: url("https://cdn.pixabay.com/photo/2016/01/19/17/29/earth-1149733_960_720.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  max-width: 1200px;
+  height: 100vh;
+}
+
+.checktime {
+  color: #fff;
+  font-size: 10px;
+  padding-top: 90px;
+}
+
+.container {
+  width: 80%;
+  color: white;
+  margin: 0 auto;
+}
+
+.welcome {
+  padding-top: 80px;
+  font-size: 30px;
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.startData {
+  font-size: 15px;
+
+}
+
+
+.calculated {
+  text-align: center;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 30px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+
+.currentData {
+  text-align: right;
+}

@@ -1,27 +1,30 @@
 {
-  "name": "api-iss-aplication",
-  "version": "1.0.0",
-  "description": "Aplication with API use to show ISS paremeters",
-  "main": "script.js",
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-scripts": "2.1.8"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/0na/API-ISS-Aplication.git"
+  "eslintConfig": {
+    "extends": "react-app"
   },
-  "author": "Aleksandra Garlikowska",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/0na/API-ISS-Aplication/issues"
-  },
-  "homepage": "https://github.com/0na/API-ISS-Aplication#readme",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-latest": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "http-server": "^0.11.1"
-  }
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "devDependencies": {},
+  "author": "",
+  "license": "ISC"
 }
