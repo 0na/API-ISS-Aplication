@@ -55,16 +55,18 @@ class App extends Component {
   }
 
   render() {
-    const { timestamp: startTimestamp, cords: startCords } = this.state.startISS;
-    const { timestamp: currentTimestamp, cords: currentCords } = this.state.currentISS;
-    const velocity = Math.floor(((getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude)) / (currentTimestamp - startTimestamp) * 3600) / 1.609344);
-    const distance = Math.floor(getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude))
+    const { timestamp: startTimestamp, cords: startCords } = this.state.startISS; //start app
+    const { timestamp: currentTimestamp, cords: currentCords } = this.state.currentISS; //current data
+
+    const velocity = Math.floor(((getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude)) / (currentTimestamp - startTimestamp) * 3600) / 1.609344); //velocity of ISS
+
+    const distance = Math.floor(getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude)) //distance from start app
 
     return (
       <div className="app">
         <div className="container">
           <div className="welcome">Welcome to the ISS Position Application </div>
-          <div className="startData"> Actual ISS info:
+          <div className="currentData"> Actual ISS info:
             <div> Time: { timeConverter(currentTimestamp) } </div>
             <div> Longitude: { currentCords.longitude + "°E" } </div>
             <div> Latitude: { currentCords.latitude + "°N" } </div>
@@ -75,9 +77,9 @@ class App extends Component {
             <div className="distance">Defeated distance from time when you join:{ distance }km! </div>
           </div>
 
-          <div className="currentData">
+          <div className="startData">
             <div> Time when you join app: { timeConverter(startTimestamp) } </div>
-            <div>ISS position: { } </div>
+            <div>ISS position: </div>
             <div>Longitude:{ startCords.longitude + "°E" }</div>
             <div>Latitude: { startCords.latitude + "°N" }</div>
           </div>
@@ -88,6 +90,8 @@ class App extends Component {
 }
 export default App;
 
+
+//Time convert from UNIX time 
 function timeConverter(timestamp) {
   var a = new Date(timestamp * 1000);
   var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -101,7 +105,7 @@ function timeConverter(timestamp) {
     date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
   return time;
 }
-
+// Calculate distance
 function getDistance(lat1, lon1, lat2, lon2) {
   var R = 6371;
   var dLat = deg2rad(lat2 - lat1);
