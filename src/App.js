@@ -65,7 +65,7 @@ class App extends Component {
         <div className="container">
           <div className="welcome">Welcome to the ISS Position Application </div>
           <div className="startData"> Actual ISS info:
-            <div> Time: { timeConverter(currentTimestamp) + "°E" } </div>
+            <div> Time: { timeConverter(currentTimestamp) } </div>
             <div> Longitude: { currentCords.longitude + "°E" } </div>
             <div> Latitude: { currentCords.latitude + "°N" } </div>
           </div>
