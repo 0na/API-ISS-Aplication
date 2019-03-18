@@ -1,107 +1,85 @@
 import React, { Component } from 'react';
 import './App.css';
 
-//intive zadanie : 
-//"http://api.open-notify.org/iss-now.json"
-//http://api.open-notify.org/iss-now.json?callback=CALLBACK
-// Wykorzystaj dane udostępniane przez API
-// http://open-notify.org/Open-Notify-API/ISS-Location-Now/
-// • Przedstaw użytkownikowi następujące dane:
-// prędkość ISS na podstawie dwóch odczytów,
-// droga przebyta przez ISS od początku zapisanych odczytów.
-// Program musi dać się łatwo skompilować i uruchomić na standardowym
-// środowisku.
-
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "Welcome to the ISS Position Application", //test this.state.text
       error: "",
       isloaded: false,
-      preparedResponse: [],//dane z API
-      issTime: [],
-      issCords: [13, 45],
-      time: "", //aktualna godzina
+      startISS: {
+        cords: {
+          latitude: null,
+          longitude: null,
+        },
+        timestamp: null
+      },
+      currentISS: {
+        cords: {
+          latitude: null,
+          longitude: null,
+        },
+        timestamp: null
+      }
     }
   }
 
-  // getCenter = () => {
-  //   fetch('http://api.open-notify.org/iss-now.json')
-  //     .then(d => d.json())
-  //     .then(d => {
-  //       this.setState({
-  //         issLocation: [d.iss_position.latitude, + ', ' +
-  //           d.iss_position.longitude]
-  //       });
-  //     });
-  // }
-
-  loadData = () => {
+  currentDataISS = () => {
     fetch("http://api.open-notify.org/iss-now.json")
-      .then(response => {
-        const preparedResponse = JSON.parse(response); //sparsowane dane
-        this.setState({ //zmiana stanu
-          issTime: preparedResponse.timestamp, //time from API
-          issCords: preparedResponse.iss_position, //position from API
-          isloaded: true, //powinno sie ladowac
-        })
-      }, 1000)
-  };
-
-  getDate = () => { //double check if time from .json is good. 
-    setInterval(() => {
-      this.setState({
-        time: new Date().toLocaleString()
+      .then(response => response.json())
+      .then(preparedResponse => {
+        const state = {
+          cords: preparedResponse.iss_position,
+          timestamp: preparedResponse.timestamp
+        }
+        if (this.state.startISS.timestamp !== null) {
+          this.setState({
+            currentISS: {
+              ...state
+            }
+          })
+        } else {
+          this.setState({
+            currentISS: {
+              ...state
+            }, startISS: {
+              ...state
+            }
+          })
+        }
       })
-    }, 1000)
   }
-
-  issDistanse = () => { //iss distance from app started - use (cords) lat and land
-  }
-
-  readTime = () => { //convert unix_time to 'normal' format
-    return timeConverter();
-  }
-
-  issSpeed = () => { //spedd iss. use distance() and convert time formula
-  }
-
 
   componentDidMount() {
-    this.loadData = this.loadData.bind(this);
-    setInterval(this.getDate.bind(this), 1000);
-    // this.getCenter = this.getCenter.bind(this);
-    // this.interval = setInterval(this.getCenter, 1000);
-
+    setInterval(this.currentDataISS.bind(this), 1000);
   }
 
   render() {
-    const { issTime, issCords, error, isloaded, text } = this.state;
-    // const preparedResponse = this.state.preparedResponse.map(prepare => (
-    //   <prepare timestamp={ preparedResponse.timestamp } />
-    // ))
-
+    const { timestamp: startTimestamp, cords: startCords } = this.state.startISS;
+    const { timestamp: currentTimestamp, cords: currentCords } = this.state.currentISS;
+    const velocity = Math.floor(((getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude)) / (currentTimestamp - startTimestamp) * 3600) / 1.609344);
+    const distance = Math.floor(getDistance(startCords.latitude, startCords.longitude, currentCords.latitude, currentCords.longitude))
 
     return (
       <div className="app">
         <div className="container">
-          <div className="checktime">Time check : { new Date().toLocaleTimeString() }</div>
-          <div className="welcome">{ text } </div>
-          <div className="startData">The time when you join my application was: { issTime.timestamp }
-            <div> ISS was in position: </div>
-            <div> Longitude: { issCords.longitude } </div>
-            <div> Latitude: { issCords.latitude } </div>
+          <div className="welcome">Welcome to the ISS Position Application </div>
+          <div className="startData"> Actual ISS info:
+            <div> Time: { timeConverter(currentTimestamp) + "°E" } </div>
+            <div> Longitude: { currentCords.longitude + "°E" } </div>
+            <div> Latitude: { currentCords.latitude + "°N" } </div>
           </div>
+
           <div className="calculated">
-            <div className="speed">ISS is moving with speed: </div>
-            <div className="distance">Defeated distance from time when you join:  </div>
+            <div className="velocity">ISS is moving with velocity: { velocity }km/h </div>
+            <div className="distance">Defeated distance from time when you join:{ distance }km! </div>
           </div>
+
           <div className="currentData">
-            <div>The time now is : </div>
-            <div>ISS position is : </div>
-            <div>Longitude: </div>
-            <div>Latitude: </div>
+            <div> Time when you join app: { timeConverter(startTimestamp) } </div>
+            <div>ISS position: { } </div>
+            <div>Longitude:{ startCords.longitude + "°E" }</div>
+            <div>Latitude: { startCords.latitude + "°N" }</div>
           </div>
         </div >
       </div>
@@ -110,7 +88,7 @@ class App extends Component {
 }
 export default App;
 
-function timeConverter(timestamp) {  //formula dziala !!!
+function timeConverter(timestamp) {
   var a = new Date(timestamp * 1000);
   var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   var year = a.getFullYear();
@@ -123,15 +101,20 @@ function timeConverter(timestamp) {  //formula dziala !!!
     date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
   return time;
 }
-//console.log(time);
-console.log(timeConverter(624534233));
 
-
-// function distance(lat1, lon1, lat2, lon2) {
-//   var p = 0.017453292519943295;    // Math.PI / 180
-//   var c = Math.cos;
-//   var a = 0.5 - c((lat2 - lat1) * p) / 2 +
-//     c(lat1 * p) * c(lat2 * p) *
-//     (1 - c((lon2 - lon1) * p)) / 2;
-
-//   return 12742 * Math.asin(Math.sqrt(a)) // 2 * R; R = 6371
+function getDistance(lat1, lon1, lat2, lon2) {
+  var R = 6371;
+  var dLat = deg2rad(lat2 - lat1);
+  var dLon = deg2rad(lon2 - lon1);
+  var a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2)
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  var d = R * c;
+  return d;
+}
+function deg2rad(deg) {
+  return deg * (Math.PI / 180)
+};
